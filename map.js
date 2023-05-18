@@ -7,8 +7,10 @@ require([
     "esri/widgets/Home",
     "esri/widgets/LayerList",
     "esri/widgets/BasemapGallery",
-    "esri/widgets/Search"
-], function(esriConfig, WebMap, MapView, ScaleBar, Legend, Home, LayerList, BasemapGallery, Search)  {
+    "esri/widgets/Search",
+    "esri/widgets/Fullscreen",
+    "esri/widgets/BasemapToggle"
+], function(esriConfig, WebMap, MapView, ScaleBar, Legend, Home, LayerList, BasemapGallery, Search, FullScreen, BasemapToggle)  {
     esriConfig.apikey = "AAPK5d39fadff8224f5d87feee8b95f8dd47zjiGI7RDnGGoWnBfLw49XSwhiHQlBHaCblyCFdN1jVdDSt8HJM3rSHbqoYf1VUZH";
 
     const webmap = new WebMap({
@@ -19,7 +21,8 @@ require([
 
     const view = new MapView({
         container: "viewDiv",
-        map: webmap
+        map: webmap,
+        zoom: 6
     });
 
     const homeBtn = new Home({
@@ -81,6 +84,17 @@ require([
     })
 
     view.ui.add(searchWidged, "top-right");
+
+    const fullscreen = new FullScreen({
+        view: view
+      })
+    view.ui.add(fullscreen, "top-right");
+
+    const basemapToggle = new BasemapToggle({
+        view: view,
+        nextBasemap: "satellite"
+      })
+    view.ui.add(basemapToggle, "bottom-left");
 
     function toggleButton(item) {
         const layerListEl = document.getElementsByClassName("esri-layer-list")[0];
